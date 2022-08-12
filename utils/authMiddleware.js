@@ -1,5 +1,4 @@
 const authMiddleware = (req, res, next) => {
-  console.log('middle', req.session);
   if (req.session.login) {
     next();
   } else {

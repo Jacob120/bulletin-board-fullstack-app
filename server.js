@@ -23,9 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: 'xyz567',
-    store: MongoStore.create({
-      client: mongoose.connection.getClient(),
-    }),
+    store: MongoStore.create(mongoose.connection),
   })
 );
 

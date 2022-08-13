@@ -64,3 +64,8 @@ exports.login = async (req, res) => {
 exports.getUser = async (req, res) => {
   res.send("I'm logged");
 };
+
+exports.logout = async (req, res) => {
+  req.session.destroy();
+  res.send('You have successfully logged out');
+};

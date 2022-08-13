@@ -5,6 +5,7 @@ const connectToDB = require('./db');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
+require('dotenv').config({ path: './.env' });
 
 // start express server
 const app = express();
@@ -20,6 +21,7 @@ connectToDB();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,

@@ -1,4 +1,6 @@
 const Ad = require('../models/ad.model');
+const getImageFileType = require('../utils/getImageFileType');
+const fs = require('fs');
 
 exports.getAll = async (req, res) => {
   try {
@@ -18,19 +20,43 @@ exports.getById = async (req, res) => {
   }
 };
 
-exports.adNew = async (req, res) => {
+exports.newAd = async (req, res) => {
   try {
-    const ad = new Ad({
-      title: req.body.title,
-      description: req.body.description,
-      date: req.body.date,
-      src: req.body.src,
-      price: req.body.price,
-      localization: req.body.localization,
-      sellerData: req.body.sellerData,
-    });
-    const newAd = await ad.save();
-    res.json(newAd);
+    const { title, description, date, price, localization, sellerData } =
+      req.body;
+    const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
+
+    if (
+      title &&
+      title.length >= 10 &&
+      title.length <= 50 &&
+      description &&
+      description.length >= 20 &&
+      description.length <= 1000 &&
+      date &&
+      req.file &&
+      ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
+      price &&
+      localization &&
+      sellerData
+    ) {
+      const ad = Ad.create({
+        title,
+        description,
+        date,
+        photo: req.file.filename,
+        price,
+        localization,
+        sellerData,
+      });
+
+      res.status(201).send({ message: 'Add created ' });
+    } else {
+      if (req.file) {
+        fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+      }
+      res.status(400).send({ message: 'Bad request' });
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

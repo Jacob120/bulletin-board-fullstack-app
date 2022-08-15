@@ -1,12 +1,11 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const getImageFileType = require('../utils/getImageFileType');
-
 const fs = require('fs');
 
 exports.register = async (req, res) => {
   try {
-    const { login, password, avatar } = req.body;
+    const { login, password, phoneNumber } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
     if (
@@ -15,7 +14,9 @@ exports.register = async (req, res) => {
       password &&
       typeof password === 'string' &&
       req.file &&
-      ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)
+      ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
+      phoneNumber &&
+      typeof phoneNumber === 'number'
     ) {
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
@@ -27,6 +28,7 @@ exports.register = async (req, res) => {
         login,
         password: await bcrypt.hash(password, 10),
         avatar: req.file.filename,
+        phoneNumber,
       });
       res.status(201).send({ message: 'User created ' + user.login });
     } else {
@@ -75,6 +77,10 @@ exports.getUser = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  req.session.destroy();
-  res.send('You have successfully logged out');
+  try {
+    req.session.destroy();
+    res.send('You have successfully logged out');
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };

@@ -44,7 +44,7 @@ exports.newAd = async (req, res) => {
         title,
         description,
         date,
-        photo: req.file.filename,
+        image: req.file.filename,
         price,
         localization,
         sellerData,
@@ -82,8 +82,11 @@ exports.editAd = async (req, res, next) => {
       ad.title = req.body.title;
       ad.description = req.body.description;
       ad.price = req.body.price;
-      ad.image = req.body.image;
-      ad.user = req.body.user;
+      ad.localization = req.body.localization;
+      ad.sellerData = req.body.sellerData;
+      if (req.file) {
+        ad.image = req.body.image;
+      }
       const updatedAd = await ad.save();
       res.json(updatedAd);
     }

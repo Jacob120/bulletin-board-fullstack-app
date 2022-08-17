@@ -1,11 +1,16 @@
-function App() {
+import Home from './components/pages/Home/Home';
+import Header from './components/views/Header';
+import Container from 'react-bootstrap/Container';
+
+const App = () => {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>Test</p>
-      </header>
-    </div>
+    <main>
+      <Header />
+      <Container>
+        <Home />
+      </Container>
+    </main>
   );
-}
+};
 
 export default App;

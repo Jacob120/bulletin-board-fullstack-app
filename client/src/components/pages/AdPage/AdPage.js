@@ -18,15 +18,18 @@ const AdPage = () => {
         <Col xs='12' lg='5'>
           <Card className={styles.card_wrapper}>
             <Card.Body>
-              <Card.Title>Price: {adData.price}$</Card.Title>
-              <Card.Subtitle className='mb-1'>
+              <Card.Title className='mb-3'>Price: {adData.price}$</Card.Title>
+              <Card.Subtitle className='mb-3'>
                 <b>Title: {adData.title}</b>
               </Card.Subtitle>
-              <Card.Text className='mb-1'>
+              <Card.Text className='mb-3'>
                 <b>Localization: {adData.localization}</b>
               </Card.Text>
               <Card.Text>{adData.description}</Card.Text>
               <Card.Text>Published: {adData.date}</Card.Text>
+              <Card.Text>Author: Placeholder</Card.Text>
+              <Card.Text>Avatar</Card.Text>
+              <Card.Text>Phone number: </Card.Text>
             </Card.Body>
           </Card>
         </Col>

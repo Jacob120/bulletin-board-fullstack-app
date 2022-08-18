@@ -5,7 +5,15 @@ const loadTestData = require('./testData');
 
 const connectToDB = () => {
   // connect to DB
-  mongoose.connect('mongodb://localhost:27017/bulletinDB', {
+  const NODE_ENV = process.env.NODE_ENV;
+  let dbUri = '';
+
+  if (NODE_ENV === 'production') dbUri = process.env.DB_URL;
+  else if (NODE_ENV === 'test')
+    dbUri = 'mongodb://localhost:27017/bulletinDBtest';
+  else dbUri = 'mongodb://localhost:27017/bulletinDB';
+
+  mongoose.connect(dbUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

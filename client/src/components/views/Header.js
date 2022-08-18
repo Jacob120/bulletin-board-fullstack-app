@@ -1,5 +1,5 @@
 import styles from './Header.module.scss';
-// import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -8,14 +8,14 @@ const Header = () => {
         <h2>Bulletin Board</h2>
         <ul className={styles.nav_list}>
           <li>
-            {/* <NavLink
+            <NavLink
               className={({ isActive }) =>
                 isActive ? styles.linkActive : undefined
               }
               to='/'
-            > */}
-            Home
-            {/* </NavLink> */}
+            >
+              Home
+            </NavLink>
           </li>
           <li>
             {/* <NavLink

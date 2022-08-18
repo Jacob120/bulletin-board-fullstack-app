@@ -18,24 +18,24 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            {/* <NavLink
+            <NavLink
               className={({ isActive }) =>
                 isActive ? styles.linkActive : undefined
               }
-              to='/favorite'
-            > */}
-            Sign in
-            {/* </NavLink> */}
+              to='/login'
+            >
+              Sign in
+            </NavLink>
           </li>
           <li>
-            {/* <NavLink
+            <NavLink
               className={({ isActive }) =>
                 isActive ? styles.linkActive : undefined
               }
-              to='/about'
-            > */}
-            Sign out
-            {/* </NavLink> */}
+              to='/register'
+            >
+              Register
+            </NavLink>
           </li>
         </ul>
       </div>

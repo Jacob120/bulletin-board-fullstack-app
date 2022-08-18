@@ -5,7 +5,7 @@ const fs = require('fs');
 
 exports.register = async (req, res) => {
   try {
-    const { login, password, phoneNumber } = req.body;
+    const { login, password, phone } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
     if (
@@ -15,8 +15,8 @@ exports.register = async (req, res) => {
       typeof password === 'string' &&
       req.file &&
       ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
-      phoneNumber &&
-      typeof phoneNumber === 'number'
+      phone &&
+      typeof phone === 'string'
     ) {
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
         login,
         password: await bcrypt.hash(password, 10),
         avatar: req.file.filename,
-        phoneNumber,
+        phone,
       });
       res.status(201).send({ message: 'User created ' + user.login });
     } else {

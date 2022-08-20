@@ -1,11 +1,17 @@
 import styles from './Header.module.scss';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { getUser } from '../../redux/usersRedux';
 
 const Header = () => {
+  const user = useSelector(getUser);
+
   return (
     <nav>
       <div className={styles.nav_wrapper}>
-        <h2>Bulletin Board</h2>
+        <NavLink to='/' className={styles.logo}>
+          <h2>Bulletin Board</h2>
+        </NavLink>
         <ul className={styles.nav_list}>
           <li>
             <NavLink
@@ -18,24 +24,40 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? styles.linkActive : undefined
-              }
-              to='/login'
-            >
-              Sign in
-            </NavLink>
+            {!user && (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? styles.linkActive : undefined
+                }
+                to='/login'
+              >
+                Sign in
+              </NavLink>
+            )}
           </li>
           <li>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? styles.linkActive : undefined
-              }
-              to='/register'
-            >
-              Register
-            </NavLink>
+            {!user && (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? styles.linkActive : undefined
+                }
+                to='/register'
+              >
+                Register
+              </NavLink>
+            )}
+          </li>
+          <li>
+            {user && (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? styles.linkActive : undefined
+                }
+                to='/profile'
+              >
+                Profile
+              </NavLink>
+            )}
           </li>
         </ul>
       </div>

@@ -5,19 +5,25 @@ import Button from 'react-bootstrap/Button';
 import CardBox from '../../features/Card/CardBox';
 import { useSelector } from 'react-redux';
 import { getAllAds } from '../../../redux/adsRedux';
+import { getUser } from '../../../redux/usersRedux';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const ads = useSelector(getAllAds);
+  const user = useSelector(getUser);
 
   return (
     <div>
       <Row className='justify-content-end mt-3'>
         <Col>
-          <h1> Bulletin Board</h1>
+          <h1 className='mb-3'> Advertisements</h1>
         </Col>
         <Col className='d-flex flex-row-reverse p-2'>
-          {/* <Link to="/post/add"> */}
-          <Button variant='primary'>Placeholder</Button> {/* </Link> */}
+          {user && (
+            <Link to='/ad/add'>
+              <Button variant='primary'>Add new advertisement</Button>{' '}
+            </Link>
+          )}
         </Col>
       </Row>
       <Row xs={1} md={4} className='g-3 '>

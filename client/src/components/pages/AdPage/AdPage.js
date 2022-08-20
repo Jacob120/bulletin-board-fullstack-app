@@ -8,10 +8,9 @@ import Card from 'react-bootstrap/Card';
 import styles from './AdPage.module.scss';
 
 const AdPage = () => {
-  const dispatch = useDispatch();
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
-  console.log(adData);
+
   return (
     <div>
       <Row className='d-flex justify-content-center mt-5'>

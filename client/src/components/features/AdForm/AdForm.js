@@ -1,24 +1,25 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { getUser } from '../../../redux/usersRedux';
 
 export const AdForm = ({ action, actionText, ...props }) => {
   let navigate = useNavigate();
+  let newDate = new Date();
+  const user = useSelector(getUser);
+
   const id = props.id;
   const [price, setPrice] = useState(props.price || '');
   const [title, setTitle] = useState(props.title || '');
   const [localization, setLocalization] = useState(props.localization || '');
-  const [description, setdescription] = useState(props.description || '');
-  const [date, setDate] = useState(props.date || '');
-  const [src, setSrc] = useState(props.src || '');
-  const [author, setAuthor] = useState(props.author || '');
-  const [phoneNumber, setPhoneNumber] = useState(props.phoneNumber || '');
+  const [description, setDescription] = useState(props.description || '');
+  const [date, setDate] = useState(props.date || newDate);
+  const [image, setImage] = useState(props.image || '');
+  const [phone, setPhone] = useState(props.phone || '');
 
   const {
     register,
@@ -31,27 +32,29 @@ export const AdForm = ({ action, actionText, ...props }) => {
       action({
         price,
         title,
-        author,
-        date,
+        author: user.login,
+        date: newDate,
         description,
         localization,
         id,
-        src,
-        phoneNumber,
+        image,
+        phone,
       });
       navigate('/');
     }
   };
 
   return (
-    <Form className='col-12 col-sm-3 mx-auto mt-3' onSubmit={handleSubmit}>
-      <h1 className='my-4'>Placeholder</h1>
-
+    <Form
+      className='col-12 col-sm-3 mx-auto mt-3'
+      onSubmit={validate(handleSubmit)}
+    >
+      <h1 className='my-4'>{actionText}</h1>
       <Form.Group className='mb-3' controlId='formPrice'>
         <Form.Label>Price</Form.Label>
         <Form.Control
           {...register('price', { required: true })}
-          type='text'
+          type='number'
           value={price}
           placeholder='Enter price'
           onChange={(e) => setPrice(e.target.value)}
@@ -62,7 +65,6 @@ export const AdForm = ({ action, actionText, ...props }) => {
           </small>
         )}
       </Form.Group>
-
       <Form.Group className='mb-3' controlId='formTitle'>
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -78,11 +80,67 @@ export const AdForm = ({ action, actionText, ...props }) => {
         />
         {errors.title && (
           <small className='d-block form-text text-danger mt-2'>
-            This field is required and has to be at between 10 to 50 characters
+            This field is required and has to be between 10 to 50 characters
             long.
           </small>
         )}
       </Form.Group>
+      <Form.Group className='mb-3' controlId='formLocalization'>
+        <Form.Label>Localization</Form.Label>
+        <Form.Control
+          {...register('localization', {
+            required: true,
+            minLength: 2,
+          })}
+          value={localization}
+          type='text'
+          placeholder='Enter localization'
+          onChange={(e) => setLocalization(e.target.value)}
+        />
+        {errors.localization && (
+          <small className='d-block form-text text-danger mt-2'>
+            This field is required.
+          </small>
+        )}
+      </Form.Group>
+      <Form.Group className='mb-3' controlId='formDescription'>
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          {...register('description', {
+            required: true,
+            minLength: 20,
+            maxLength: 1000,
+          })}
+          value={description}
+          as='textarea'
+          rows='5'
+          placeholder='Enter description'
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        {errors.description && (
+          <small className='d-block form-text text-danger mt-2'>
+            This field is required and has to be between 20 to 1000 characters
+            long.
+          </small>
+        )}
+      </Form.Group>
+      <Form.Group className='mb-3' controlId='formPhone'>
+        <Form.Label>Phone number</Form.Label>
+        <Form.Control
+          type='tel'
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder='Phone number'
+        />
+      </Form.Group>
+      <Form.Group className='mb-3' controlId='formFile'>
+        <Form.Label>Add image</Form.Label>
+        <Form.Control
+          type='file'
+          onChange={(e) => setImage(e.target.files[0])}
+        />
+      </Form.Group>
+      <Button className='mt-3' as='input' type='submit' value='Submit' />{' '}
     </Form>
   );
 };

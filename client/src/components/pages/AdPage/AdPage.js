@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import styles from './AdPage.module.scss';
+import { IMAGES_URL } from '../../../config';
 
 const AdPage = () => {
   const { adId } = useParams();
@@ -16,6 +17,8 @@ const AdPage = () => {
       <Row className='d-flex justify-content-center mt-5'>
         <Col xs='12' lg='5'>
           <Card className={styles.card_wrapper}>
+            <Card.Img variant='top' src={IMAGES_URL + adData.image} />
+
             <Card.Body>
               <Card.Title className='mb-3'>Price: {adData.price}$</Card.Title>
               <Card.Subtitle className='mb-3'>

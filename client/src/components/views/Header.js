@@ -59,6 +59,18 @@ const Header = () => {
               </NavLink>
             )}
           </li>
+          <li>
+            {user && (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? styles.linkActive : undefined
+                }
+                to='/logout'
+              >
+                Logout
+              </NavLink>
+            )}
+          </li>
         </ul>
       </div>
     </nav>

@@ -18,7 +18,12 @@ app.listen(process.env.PORT || 8000, () => {
 connectToDB();
 
 // add middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'http://localhost:8000'],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -28,6 +33,9 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create(mongoose.connection),
+    cookie: {
+      secure: process.env.NODE_ENV == 'production',
+    },
   })
 );
 

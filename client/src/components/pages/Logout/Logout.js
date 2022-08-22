@@ -14,12 +14,14 @@ const Logout = () => {
       method: 'DELETE',
     };
 
-    fetch(`${API_URL}auth/logout`, options).then(() => {
-      dispatch(logOut);
-      setTimeout(() => {
+    fetch(`${API_URL}auth/logout`, options)
+      .then(() => {
+        dispatch(logOut());
         navigate('/');
-      }, 3000);
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [dispatch]);
 
   return null;

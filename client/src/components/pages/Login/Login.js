@@ -50,7 +50,10 @@ const Login = () => {
   return (
     <Form className='col-12 col-sm-3 mx-auto mt-3' onSubmit={handleSubmit}>
       <h1 className='my-4'>Sign up</h1>
-
+      <p className='mb-3'>
+        For demo purpose you can just sign in with login: JohnDoe and password:
+        test3
+      </p>
       {status === 'success' && (
         <Alert variant='success'>
           <Alert.Heading>Success!</Alert.Heading>

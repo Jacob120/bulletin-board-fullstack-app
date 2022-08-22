@@ -7,17 +7,25 @@ import { IMAGES_URL } from '../../../config';
 const CardBox = ({ title, price, localization, image, _id }) => {
   return (
     <Card className={styles.card_wrapper}>
-      <Card.Img variant='top' src={IMAGES_URL + image} />
+      <Card.Img
+        variant='top'
+        src={IMAGES_URL + image}
+        className={styles.card_image}
+      />
       <Card.Body>
-        <Card.Title>Price: {price}$</Card.Title>
-        <Card.Subtitle className='mb-1'>
-          <b>Title: {title}</b>
-        </Card.Subtitle>
-        <Card.Text className='mb-1'>
-          <b>Localization: {localization}</b>
-        </Card.Text>
+        <div className={styles.body}>
+          <Card.Title>Price: {price}$</Card.Title>
+          <Card.Subtitle className='my-3'>
+            <b>{title}</b>
+          </Card.Subtitle>
+          <Card.Text className='mb-3'>
+            <b>Localization: {localization}</b>
+          </Card.Text>
+        </div>
         <Link to={'/ad/' + _id}>
-          <Button variant='primary'>Read more</Button>
+          <Button className={styles.button} variant='primary'>
+            Read more
+          </Button>
         </Link>
       </Card.Body>
     </Card>

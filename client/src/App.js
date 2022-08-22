@@ -37,7 +37,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/ad/:adId' element={<AdPage />} />
-          <Route path='/ad/:adId' element={<EditAdInfo />} />
+          <Route path='/ad/edit/:adId' element={<EditAdInfo />} />
           <Route path='/ad/add' element={<AddAd />} />
           <Route path='/ad/remove/:adId' element={<AdRemove />} />
           <Route path='/search/:searchPhrase' element={<Search />} />

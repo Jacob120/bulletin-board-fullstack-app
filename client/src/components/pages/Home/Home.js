@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   const ads = useSelector(getAllAds);
   const user = useSelector(getUser);
-  console.log(ads);
+
   return (
     <div>
       <Row className='justify-content-end mt-3'>

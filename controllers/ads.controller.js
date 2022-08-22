@@ -22,7 +22,7 @@ exports.getById = async (req, res) => {
 
 exports.newAd = async (req, res) => {
   try {
-    const { title, description, date, price, localization, sellerData } =
+    const { title, description, date, price, localization, user, phone } =
       req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
@@ -38,7 +38,8 @@ exports.newAd = async (req, res) => {
       ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
       price &&
       localization &&
-      sellerData
+      user &&
+      phone
     ) {
       const ad = Ad.create({
         title,
@@ -47,7 +48,8 @@ exports.newAd = async (req, res) => {
         image: req.file.filename,
         price,
         localization,
-        sellerData,
+        user,
+        phone,
       });
 
       res.status(201).send({ message: 'Add created ' });
@@ -83,7 +85,7 @@ exports.editAd = async (req, res, next) => {
       ad.description = req.body.description;
       ad.price = req.body.price;
       ad.localization = req.body.localization;
-      ad.sellerData = req.body.sellerData;
+      ad.user = req.body.user;
       if (req.file) {
         ad.image = req.body.image;
       }

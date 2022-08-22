@@ -3,4 +3,14 @@
 .card_wrapper {
   background-color: darken($color-dark, 3%);
   border-style: none;
+  height: 100%;
+}
+
+.body {
+  height: 12rem;
+}
+
+.card_image {
+  height: 12rem;
+  object-fit: cover;
 }

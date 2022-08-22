@@ -7,11 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { getUser } from '../../../redux/usersRedux';
 
-export const AdForm = ({ action, actionText, ...props }) => {
+const AdForm = ({ action, actionText, ...props }) => {
   let navigate = useNavigate();
   let newDate = new Date();
   const user = useSelector(getUser);
-  console.log(user);
 
   const id = props.id;
   const [price, setPrice] = useState(props.price || '');
@@ -33,7 +32,7 @@ export const AdForm = ({ action, actionText, ...props }) => {
       action({
         price,
         title,
-        author: user.login,
+        user: user.login,
         date: newDate,
         description,
         localization,
@@ -41,8 +40,8 @@ export const AdForm = ({ action, actionText, ...props }) => {
         image,
         phone,
       });
-      navigate('/');
     }
+    navigate('/');
   };
 
   return (
@@ -145,3 +144,5 @@ export const AdForm = ({ action, actionText, ...props }) => {
     </Form>
   );
 };
+
+export default AdForm;

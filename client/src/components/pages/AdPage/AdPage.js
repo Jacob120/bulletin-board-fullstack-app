@@ -1,16 +1,41 @@
+import styles from './AdPage.module.scss';
 import { getAdById } from '../../../redux/adsRedux';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import styles from './AdPage.module.scss';
 import { IMAGES_URL } from '../../../config';
+import { getUser } from '../../../redux/usersRedux';
+import { removeAd } from '../../../redux/adsRedux';
+import ModalDelete from '../../features/ModalDelete/ModalDelete';
 
 const AdPage = () => {
+  const dispatch = useDispatch();
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
+  const user = useSelector(getUser);
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleRemove = (e) => {
+    e.preventDefault();
+    dispatch(removeAd(adId));
+    handleClose();
+  };
+
+  if (showModal)
+    return (
+      <ModalDelete
+        showModal={showModal}
+        handleClose={handleClose}
+        handleRemove={handleRemove}
+      />
+    );
+  if (!adData) return <Navigate to='/' />;
 
   return (
     <div>
@@ -29,20 +54,24 @@ const AdPage = () => {
               </Card.Text>
               <Card.Text>{adData.description}</Card.Text>
               <Card.Text>Published: {adData.date}</Card.Text>
-              <Card.Text>Author: Placeholder</Card.Text>
+              <Card.Text>Author: {adData.user}</Card.Text>
               <Card.Text>Avatar</Card.Text>
-              <Card.Text>Phone number: </Card.Text>
+              <Card.Text>Phone number: {adData.phone}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
-        <Col xs='12' lg='4'>
-          {/* <Link to={'/edit/' + adId}> */}
-          <Button variant='outline-info' className='m-2'>
-            Edit
-          </Button>
-          {/* </Link> */}
-          <Button variant='outline-danger'>Delete</Button>
-        </Col>
+        {user.login === adData.user && (
+          <Col xs='12' lg='4'>
+            <Link to={'/ad/edit/' + adId}>
+              <Button variant='outline-info' className='m-2'>
+                Edit
+              </Button>
+            </Link>
+            <Button variant='outline-danger' onClick={handleShow}>
+              Delete
+            </Button>
+          </Col>
+        )}
       </Row>
     </div>
   );

@@ -25,6 +25,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
     store: MongoStore.create(mongoose.connection),
   })
 );

@@ -11,6 +11,7 @@ export const AdForm = ({ action, actionText, ...props }) => {
   let navigate = useNavigate();
   let newDate = new Date();
   const user = useSelector(getUser);
+  console.log(user);
 
   const id = props.id;
   const [price, setPrice] = useState(props.price || '');

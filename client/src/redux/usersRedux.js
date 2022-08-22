@@ -15,7 +15,7 @@ const usersReducer = (statePart = null, action) => {
     case LOG_IN:
       return action.payload;
     case LOG_OUT:
-      return null;
+      return {};
     default:
       return statePart;
   }

@@ -17,6 +17,7 @@ const AdPage = () => {
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
   const user = useSelector(getUser);
+  const userLogin = user.login || null;
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -60,7 +61,7 @@ const AdPage = () => {
             </Card.Body>
           </Card>
         </Col>
-        {user.login === adData.user && (
+        {userLogin && userLogin === adData.user && (
           <Col xs='12' lg='4'>
             <Link to={'/ad/edit/' + adId}>
               <Button variant='outline-info' className='m-2'>

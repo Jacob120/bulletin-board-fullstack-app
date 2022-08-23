@@ -77,17 +77,19 @@ exports.deleteById = async (req, res) => {
 };
 
 exports.editAd = async (req, res, next) => {
+  const { title, description, price, date, localization, user } = req.body;
   try {
     const ad = await Ad.findById(req.params.id);
     if (!ad) return res.status(404).json({ message: 'Ad not found' });
     else {
-      ad.title = req.body.title;
-      ad.description = req.body.description;
-      ad.price = req.body.price;
-      ad.localization = req.body.localization;
-      ad.user = req.body.user;
+      ad.title = title;
+      ad.description = description;
+      ad.price = price;
+      ad.date = date;
+      ad.localization = localization;
+      ad.user = user;
       if (req.file) {
-        ad.image = req.body.image;
+        ad.image = req.file.image;
       }
       const updatedAd = await ad.save();
       res.json(updatedAd);

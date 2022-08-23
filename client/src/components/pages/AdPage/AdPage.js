@@ -17,7 +17,7 @@ const AdPage = () => {
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
   const user = useSelector(getUser);
-  console.log(user);
+  const formatDate = adData.date.slice(0, 10).replace(/-/g, '/') || '';
 
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -55,7 +55,7 @@ const AdPage = () => {
                 <b>Localization: {adData.localization}</b>
               </Card.Text>
               <Card.Text>{adData.description}</Card.Text>
-              <Card.Text>Published: {adData.date}</Card.Text>
+              <Card.Text>Published: {formatDate}</Card.Text>
               <Card.Text>Author: {adData.user}</Card.Text>
               <Card.Text>Avatar</Card.Text>
               <Card.Text>Phone number: {adData.phone}</Card.Text>

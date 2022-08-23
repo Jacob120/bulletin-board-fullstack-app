@@ -10,11 +10,12 @@ export const EditAdForm = () => {
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
   let navigate = useNavigate();
-  console.log(adData);
+
   const handleSubmit = (ad) => {
     dispatch(editAd({ ...ad, adId }));
     navigate('/');
   };
+
   if (!adData) return <Navigate to='/' />;
   return (
     <AdForm

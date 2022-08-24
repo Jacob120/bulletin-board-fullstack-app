@@ -99,14 +99,12 @@ exports.editAd = async (req, res, next) => {
   }
 };
 
-exports.searchPhrase = async (req, res) => {
+exports.searchPhrase = async (req, res, next) => {
+  const { searchPhrase } = req.params;
   try {
-    const ad = await Ad.find({
-      $text: {
-        $search: req.params.searchPhase,
-      },
-    });
-    res.json(ad);
+    const ads = await Ad.find({ $text: { $search: searchPhrase } });
+    if (!ads) return res.status(404).json({ message: 'Ad not found' });
+    else res.json(ads);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

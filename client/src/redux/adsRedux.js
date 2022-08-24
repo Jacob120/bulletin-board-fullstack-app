@@ -18,9 +18,9 @@ export const editAd = (payload) => ({ type: EDIT_AD, payload });
 export const updateAds = (payload) => ({ type: UPDATE_ADS, payload });
 export const addAd = (payload) => ({ type: ADD_AD, payload });
 export const removeAd = (payload) => ({ type: REMOVE_AD, payload });
-export const searchAd = (searchPhase) => ({
+export const searchAd = (searchPhrase) => ({
   type: SEARCH_ADS,
-  payload: { searchPhase },
+  payload: { searchPhrase },
 });
 
 export const fetchData = () => {
@@ -32,6 +32,12 @@ export const fetchData = () => {
   };
 };
 
+export const fetchAdvertBySearchPhrase = (searchPhrase) => {
+  return (dispatch) => {
+    fetch(API_URL + 'api/ads/search/' + searchPhrase).then((res) => res.json());
+    dispatch(searchAd(searchPhrase));
+  };
+};
 const adsReducer = (statePart = [], action) => {
   switch (action.type) {
     case EDIT_AD:
@@ -45,14 +51,7 @@ const adsReducer = (statePart = [], action) => {
     case REMOVE_AD:
       return statePart.filter((ad) => ad._id !== action.payload);
     case SEARCH_ADS:
-      return {
-        ...statePart,
-        data: [
-          ...statePart.data.filter((ad) =>
-            ad.title.includes(action.payload.searchPhase)
-          ),
-        ],
-      };
+      return statePart.filter((ad) => ad.title.includes(action.payload));
     default:
       return statePart;
   }

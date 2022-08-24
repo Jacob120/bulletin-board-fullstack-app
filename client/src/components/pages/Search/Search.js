@@ -20,6 +20,8 @@ const Search = () => {
     dispatch(fetchAdvertBySearchPhrase(searchPhrase));
   }, []);
 
+  const ads = useSelector(getAllAds);
+
   return (
     <Row xs={1} md={4} className='g-3 my-5'>
       {ads.map((ad) => (

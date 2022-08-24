@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AdForm from '../AdForm/AdForm';
 import { addAd } from '../../../redux/adsRedux';
 import { API_URL } from '../../../config';
+import { fetchData } from '../../../redux/adsRedux';
 
 const AddAdForm = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const AddAdForm = () => {
       body: formData,
     };
     fetch(`${API_URL}api/ads`, options);
+    dispatch(fetchData());
     navigate('/');
   };
 

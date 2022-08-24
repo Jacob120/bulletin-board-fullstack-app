@@ -11,12 +11,17 @@ const EDIT_AD = createActionName('EDIT_AD');
 const UPDATE_ADS = createActionName('UPDATE_ADS');
 const ADD_AD = createActionName('ADD_AD');
 const REMOVE_AD = createActionName('REMOVE_AD');
+const SEARCH_ADS = createActionName('SEARCH_ADS');
 
 // action creators
 export const editAd = (payload) => ({ type: EDIT_AD, payload });
 export const updateAds = (payload) => ({ type: UPDATE_ADS, payload });
 export const addAd = (payload) => ({ type: ADD_AD, payload });
 export const removeAd = (payload) => ({ type: REMOVE_AD, payload });
+export const searchAd = (searchPhase) => ({
+  type: SEARCH_ADS,
+  payload: { searchPhase },
+});
 
 export const fetchData = () => {
   return (dispatch) => {
@@ -39,6 +44,15 @@ const adsReducer = (statePart = [], action) => {
       return [...statePart, { ...action.payload, id: shortid() }];
     case REMOVE_AD:
       return statePart.filter((ad) => ad._id !== action.payload);
+    case SEARCH_ADS:
+      return {
+        ...statePart,
+        data: [
+          ...statePart.data.filter((ad) =>
+            ad.title.includes(action.payload.searchPhase)
+          ),
+        ],
+      };
     default:
       return statePart;
   }

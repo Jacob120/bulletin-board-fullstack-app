@@ -10,5 +10,6 @@ const adSchema = new mongoose.Schema({
   user: { type: String, required: true },
   phone: { type: Number, required: true },
 });
+adSchema.index({ '$**': 'text' });
 
 module.exports = mongoose.model('Ad', adSchema);

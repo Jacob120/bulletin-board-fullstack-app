@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllAds, searchAd } from '../../../redux/adsRedux';
+import { getAllAds, searchAd, updateAds } from '../../../redux/adsRedux';
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
 import { API_URL } from '../../../config';
@@ -14,19 +14,14 @@ const Search = () => {
   useEffect(() => {
     const options = {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+
       credentials: 'include',
     };
-    fetch(`${API_URL}api/ads/search/${searchPhrase}`, options)
-      .then((res) => {
-        dispatch(searchAd(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+    fetch(`${API_URL}api/ads/search/${searchPhrase}`, options).then((res) => {
+      // dispatch(updateAds(res.data));
+      console.log(res);
+    });
+  }, [dispatch]);
 
   return (
     <Row xs={1} md={4} className='g-3 my-5'>

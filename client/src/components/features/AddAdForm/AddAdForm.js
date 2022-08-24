@@ -23,7 +23,6 @@ const AddAdForm = () => {
     const options = {
       method: 'POST',
       body: formData,
-      credentials: 'include',
     };
     fetch(`${API_URL}api/ads`, options);
     navigate('/');

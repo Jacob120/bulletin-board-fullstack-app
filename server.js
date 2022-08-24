@@ -29,9 +29,6 @@ app.use(
     saveUninitialized: false,
     mongoUrl: process.env.DB_URL,
     store: MongoStore.create(mongoose.connection),
-    cookie: {
-      secure: process.env.NODE_ENV == 'production',
-    },
   })
 );
 

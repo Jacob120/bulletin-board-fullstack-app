@@ -34,10 +34,13 @@ export const fetchData = () => {
 
 export const fetchAdvertBySearchPhrase = (searchPhrase) => {
   return (dispatch) => {
-    fetch(API_URL + 'api/ads/search/' + searchPhrase).then((res) => res.json());
+    fetch(API_URL + 'api/ads/search/' + searchPhrase)
+      .then((res) => res.json())
+      .then((ads) => dispatch(updateAds(ads)));
     dispatch(searchAd(searchPhrase));
   };
 };
+
 const adsReducer = (statePart = [], action) => {
   switch (action.type) {
     case EDIT_AD:

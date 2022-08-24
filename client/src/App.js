@@ -16,19 +16,11 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchData } from './redux/adsRedux';
 import { Routes, Route } from 'react-router-dom';
-import { API_URL } from './config';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => dispatch(fetchData()), [dispatch]);
-
-  const options = {
-    method: 'GET',
-  };
-  fetch(`${API_URL}auth/user`, options).then((res) => {
-    console.log('logged in?', res);
-  });
 
   return (
     <main>

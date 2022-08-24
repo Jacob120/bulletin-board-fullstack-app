@@ -1,10 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  getAllAds,
-  searchAd,
-  updateAds,
-  fetchAdvertBySearchPhrase,
-} from '../../../redux/adsRedux';
+import { getAllAds, fetchAdvertBySearchPhrase } from '../../../redux/adsRedux';
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
 
@@ -15,12 +10,12 @@ import Col from 'react-bootstrap/Col';
 const Search = () => {
   const { searchPhrase } = useParams();
   const dispatch = useDispatch();
+  const ads = useSelector(getAllAds);
 
   useEffect(() => {
     dispatch(fetchAdvertBySearchPhrase(searchPhrase));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const ads = useSelector(getAllAds);
 
   return (
     <Row xs={1} md={4} className='g-3 my-5'>

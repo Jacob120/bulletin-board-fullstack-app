@@ -5,16 +5,20 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CardBox from '../../features/CardBox/CardBox';
 import { Spinner } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { getAllAds } from '../../../redux/adsRedux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData, getAllAds } from '../../../redux/adsRedux';
 import { getUser } from '../../../redux/usersRedux';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Home = () => {
   const ads = useSelector(getAllAds);
   const user = useSelector(getUser);
   const [search, setSearch] = useState('');
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(fetchData()), [dispatch]);
 
   if (!ads) {
     return (
